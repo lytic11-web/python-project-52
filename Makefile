@@ -27,3 +27,9 @@ test-pytest:
 
 test-coverage:
 	uv run pytest --cov=task_manager --cov-report=xml:coverage.xml
+
+build:
+	./build.sh
+
+render-start:
+	gunicorn task_manager.wsgi:application

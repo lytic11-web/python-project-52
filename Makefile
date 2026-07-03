@@ -32,4 +32,4 @@ build:
 	./build.sh
 
 render-start:
-	gunicorn task_manager.wsgi:application
+	uv run gunicorn task_manager.wsgi:application

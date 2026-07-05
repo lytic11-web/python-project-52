@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная — Менеджер задач{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Добро пожаловать!</h1>
+        <p class="col-md-8 fs-4">Это система управления задачами. Здесь вы можете создавать задачи, назначать исполнителей и отслеживать прогресс.</p>
+        <hr class="my-4">
+        <p>Используйте меню выше для навигации по приложению.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Начать работу</a>
+    </div>
+</div>
+
+<div class="row align-items-md-starter">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Управление задачами</h5>
+                <p class="card-text">Создавайте, редактируйте и удаляйте задачи. Назначайте исполнителей и устанавливайте сроки.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Отслеживание прогресса</h5>
+                <p class="card-text">Следите за статусом задач, используйте метки и фильтры для удобной работы.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

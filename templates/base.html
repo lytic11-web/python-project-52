@@ -7,7 +7,7 @@
     <title>{% block title %}Менеджер задач{% endblock %}</title>
     {% bootstrap_css %}
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
@@ -43,14 +43,16 @@
     </nav>
 
     <!-- Основной контент -->
-    <main class="container mt-4">
+    <main class="container mt-4 mb-auto">
         {% bootstrap_messages %}
         {% block content %}{% endblock %}
     </main>
 
     <!-- Футер -->
-    <footer class="container mt-5 py-3 text-center text-muted border-top">
-        <p>&copy; 2026 Менеджер задач</p>
+    <footer class="py-3 text-start text-muted border-top">
+        <div class="container">
+            <a href="https://hexlet.io" target="_blank">Hexlet</a>
+        </div>
     </footer>
 
     {% bootstrap_javascript %}

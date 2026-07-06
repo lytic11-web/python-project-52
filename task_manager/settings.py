@@ -18,7 +18,6 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # Разрешённые хосты из переменной окружения
-# 'webserver' — обязательное требование Hexlet
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
     'localhost,127.0.0.1,webserver'
@@ -37,12 +36,12 @@ INSTALLED_APPS = [
     'django_bootstrap5',
 
     # Локальные приложения
+    'users',
     'tasks',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # WhiteNoise для эффективной раздачи статики в продакшене
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,8 +71,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 # База данных через dj-database-url
-# Берёт URL из переменной окружения DATABASE_URL
-# Если не задана — использует SQLite
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')
@@ -100,3 +97,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Тип первичного ключа
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Настройки аутентификации
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'

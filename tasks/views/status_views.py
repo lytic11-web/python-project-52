@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.db.models import ProtectedError
 from django.shortcuts import redirect
-from .models import Status
+from tasks.models import Status
 
 
 class IndexView(TemplateView):

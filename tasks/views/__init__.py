@@ -5,6 +5,12 @@ from .status_views import (
     StatusUpdateView,
     StatusDeleteView,
 )
+from .label_views import (
+    LabelListView,
+    LabelCreateView,
+    LabelUpdateView,
+    LabelDeleteView,
+)
 from .task_views import (
     TaskListView,
     TaskCreateView,
@@ -19,6 +25,10 @@ __all__ = [
     'StatusCreateView',
     'StatusUpdateView',
     'StatusDeleteView',
+    'LabelListView',
+    'LabelCreateView',
+    'LabelUpdateView',
+    'LabelDeleteView',
     'TaskListView',
     'TaskCreateView',
     'TaskUpdateView',

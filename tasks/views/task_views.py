@@ -6,14 +6,33 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from tasks.models import Task
 from tasks.forms import TaskForm
+from django_filters.views import FilterView
+from tasks.filters import TaskFilter
 
 
-class TaskListView(LoginRequiredMixin, ListView):
-    """Список всех задач."""
+class TaskListView(LoginRequiredMixin, FilterView):
+    """Список всех задач с фильтрацией."""
     model = Task
     template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
+    filterset_class = TaskFilter
     ordering = ['-created_at']
+
+    def get_filterset_kwargs(self, filterset_class):
+        """Передаём текущего пользователя в фильтр."""
+        kwargs = super().get_filterset_kwargs(filterset_class)
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_queryset(self):
+        """Получаем queryset с применёнными фильтрами."""
+        queryset = super().get_queryset()
+        
+        # Если выбран фильтр "Только мои задачи"
+        if self.request.GET.get('my_tasks'):
+            queryset = queryset.filter(author=self.request.user)
+        
+        return queryset
 
 
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

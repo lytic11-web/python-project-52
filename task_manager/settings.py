@@ -5,6 +5,7 @@ import dj_database_url
 
 # Загрузка переменных окружения из .env
 load_dotenv()
+ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN', '')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
 
     # Сторонние приложения
     'django_bootstrap5',
+    'rollbar',
 
     # Локальные приложения
     'users',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -103,3 +106,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+# Rollbar configuration
+if ROLLBAR_ACCESS_TOKEN:
+    ROLLBAR = {
+        'access_token': ROLLBAR_ACCESS_TOKEN,
+        'environment': 'production' if not DEBUG else 'development',
+        'root': str(BASE_DIR),
+        'enabled': True,
+    }
+    
+    # Логирование
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'rollbar': {
+                'level': 'WARNING',
+                'class': 'rollbar.contrib.django.handlers.RollbarHandler',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['rollbar'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+        },
+    }

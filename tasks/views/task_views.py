@@ -8,7 +8,12 @@ from tasks.models import Task
 from tasks.forms import TaskForm
 from django_filters.views import FilterView
 from tasks.filters import TaskFilter
+from django.http import HttpResponse
 
+
+def test_rollbar(request):
+    """Тестовая view для проверки Rollbar."""
+    raise Exception("Test error for Rollbar!")
 
 class TaskListView(LoginRequiredMixin, FilterView):
     """Список всех задач с фильтрацией."""

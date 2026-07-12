@@ -115,15 +115,15 @@ if ROLLBAR_ACCESS_TOKEN:
         'root': str(BASE_DIR),
         'enabled': True,
     }
-    
-    # Логирование
+
+    # Логирование - исправленный путь!
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
             'rollbar': {
                 'level': 'WARNING',
-                'class': 'rollbar.contrib.django.handlers.RollbarHandler',
+                'class': 'rollbar.logger.RollbarHandler',  # ← ИСПРАВЛЕНО!
             },
         },
         'loggers': {

@@ -8,7 +8,6 @@ from tasks.models import Task
 from tasks.forms import TaskForm
 from django_filters.views import FilterView
 from tasks.filters import TaskFilter
-from django.http import HttpResponse
 
 
 class TaskListView(LoginRequiredMixin, FilterView):
@@ -81,7 +80,3 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/task_detail.html'
     context_object_name = 'task'
-
-def test_rollbar(request):
-    """Тестовая ошибка для Rollbar."""
-    raise Exception("Test error from Rollbar integration!")

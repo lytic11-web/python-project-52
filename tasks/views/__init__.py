@@ -17,6 +17,7 @@ from .task_views import (
     TaskUpdateView,
     TaskDeleteView,
     TaskDetailView,
+    test_rollbar,
 )
 
 __all__ = [
@@ -34,4 +35,5 @@ __all__ = [
     'TaskUpdateView',
     'TaskDeleteView',
     'TaskDetailView',
+    'test_rollbar',
 ]

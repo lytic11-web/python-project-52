@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -108,22 +108,22 @@ LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
 # Rollbar configuration
-if ROLLBAR_ACCESS_TOKEN:
-    ROLLBAR = {
-        'access_token': ROLLBAR_ACCESS_TOKEN,
-        'environment': 'production' if not DEBUG else 'development',
-        'root': str(BASE_DIR),
-        'enabled': True,
-    }
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    'environment': 'production' if not DEBUG else 'development',
+    'root': str(BASE_DIR),
+    'enabled': True,
+}
 
-    # Логирование - исправленный путь!
+# Логирование
+if ROLLBAR['access_token']:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
             'rollbar': {
                 'level': 'WARNING',
-                'class': 'rollbar.logger.RollbarHandler',  # ← ИСПРАВЛЕНО!
+                'class': 'rollbar.logger.RollbarHandler',
             },
         },
         'loggers': {

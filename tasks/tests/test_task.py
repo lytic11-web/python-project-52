@@ -80,7 +80,7 @@ class TaskCRUDTest(TestCase):
     def test_task_delete_by_non_author(self):
         """Не автор не может удалить задачу."""
         # Создаём другого пользователя
-        other_user = User.objects.create_user(
+        User.objects.create_user(
             username='other',
             password='testpass123'
         )

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from tasks.models import Task
 
 
@@ -21,3 +22,4 @@ class TaskForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['executor'].label_from_instance = lambda obj: obj.username
+        self.fields['executor'].empty_label = None

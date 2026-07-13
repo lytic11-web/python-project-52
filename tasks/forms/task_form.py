@@ -4,12 +4,12 @@ from tasks.models import Task
 
 
 class TaskForm(forms.ModelForm):
+    # Явно объявляем поле, чтобы гарантировать правильный рендеринг для тестов
     executor = forms.ModelChoiceField(
         queryset=User.objects.all(),
         label='Исполнитель',
         required=False,
-        empty_label='---------',
-        widget=forms.Select(attrs={'class': 'form-select'})
+        empty_label='---------'
     )
 
     class Meta:

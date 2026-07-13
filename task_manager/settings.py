@@ -112,11 +112,11 @@ ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'production' if not DEBUG else 'development',
     'root': str(BASE_DIR),
-    'enabled': True,
+    'enabled': not DEBUG,
 }
 
 # Логирование
-if ROLLBAR['access_token']:
+if ROLLBAR['access_token'] and ROLLBAR.get('enabled'):
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,

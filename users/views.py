@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from .forms import UserRegistrationForm, UserUpdateForm
+from .forms import UserRegistrationForm, UserUpdateForm, UserLoginForm
 
 
 class UserListView(ListView):
@@ -56,6 +56,7 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class UserLoginView(SuccessMessageMixin, LoginView):
     """Вход в систему."""
+    form_class = UserLoginForm
     template_name = 'users/login.html'
     success_message = 'Вы залогинены'
 

@@ -46,10 +46,10 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('status_list')
 
     def post(self, request, *args, **kwargs):
-        """Переопределяем post для обработки ProtectedError."""
-        try:
-            messages.success(request, 'Статус успешно удален')
-            return super().post(request, *args, **kwargs)
-        except ProtectedError:
-            messages.error(request, 'Невозможно удалить статус')
-            return redirect('status_delete', pk=self.get_object().pk)
+       status = self.get_object()
+       if status.task_set.exists():  
+           messages.error(request, 'Невозможно удалить статус')
+           return redirect('status_delete', pk=status.pk)
+
+       messages.success(request, 'Статус успешно удален')
+       return super().post(request, *args, **kwargs)

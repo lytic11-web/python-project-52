@@ -38,6 +38,16 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
         """Только сам пользователь может редактировать свой профиль."""
         return self.request.user.pk == self.get_object().pk
 
+    def form_valid(self, form):
+        # Если введены пароли и они совпадают, обновляем пароль пользователя
+        password1 = form.cleaned_data.get('password1')
+        password2 = form.cleaned_data.get('password2')
+        if password1 and password2 and password1 == password2:
+            self.object = form.save(commit=False)
+            self.object.set_password(password1)
+            self.object.save()
+            return super().form_valid(form)
+        return super().form_valid(form)
 
 class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Удаление пользователя."""

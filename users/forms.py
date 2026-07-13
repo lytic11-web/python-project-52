@@ -6,47 +6,40 @@ from django.contrib.auth.models import User
 class UserRegistrationForm(UserCreationForm):
     """Форма регистрации пользователя."""
 
-    first_name = forms.CharField(
-        label='Имя',
-        max_length=30,
-        required=True,
-    )
-    last_name = forms.CharField(
-        label='Фамилия',
-        max_length=30,
-        required=True,
-    )
-    username = forms.CharField(
-        label='Имя пользователя',
-        max_length=150,
-        required=True,
-        help_text='Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.'
-    )
-    password1 = forms.CharField(
-        label='Пароль',
-        widget=forms.PasswordInput,
-        required=True,
-        help_text='Ваш пароль должен содержать как минимум 8 символов.'
-    )
-    password2 = forms.CharField(
-        label='Подтверждение пароля',
-        widget=forms.PasswordInput,
-        required=True,
-        help_text='Для подтверждения введите, пожалуйста, пароль ещё раз.'
-    )
-
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
+        # Порядок полей как в демо
         fields = ('first_name', 'last_name', 'username', 'password1', 'password2')
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'username': 'Имя пользователя',
+            'password1': 'Пароль',
+            'password2': 'Подтверждение пароля',
+        }
+        help_texts = {
+            'username': 'Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.',
+            'password1': 'Ваш пароль должен содержать как минимум 3 символа.',
+            'password2': 'Для подтверждения введите, пожалуйста, пароль ещё раз.',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Убираем стандартные требования к паролю
+        self.fields['password1'].help_text = 'Ваш пароль должен содержать как минимум 3 символа.'
+        self.fields['password2'].help_text = 'Для подтверждения введите, пожалуйста, пароль ещё раз.'
+        self.fields['password1'].label = 'Пароль'
+        self.fields['password2'].label = 'Подтверждение пароля'
 
 
 class UserUpdateForm(forms.ModelForm):
     """Форма редактирования пользователя."""
 
-    first_name = forms.CharField(label='Имя', max_length=30, required=True)
-    last_name = forms.CharField(label='Фамилия', max_length=30, required=True)
-    username = forms.CharField(label='Имя пользователя', max_length=150, required=True)
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username')
+        labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'username': 'Имя пользователя',
+        }

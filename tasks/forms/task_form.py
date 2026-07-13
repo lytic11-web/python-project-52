@@ -15,7 +15,9 @@ class TaskForm(forms.ModelForm):
         }
         widgets = {
             'description': forms.Textarea(attrs={'rows': 5, 'class': 'form-control'}),
-            # Явно указываем виджет Select
-            'executor': forms.Select(attrs={'class': 'form-select'}),
             'labels': forms.SelectMultiple(attrs={'class': 'form-select', 'size': '5'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['executor'].label_from_instance = lambda obj: obj.username

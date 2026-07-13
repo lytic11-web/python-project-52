@@ -58,9 +58,7 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_message = 'Пользователь успешно удален'
 
     def test_func(self):
-        """Только сам пользователь может удалить свой профиль."""
         return self.request.user.pk == self.get_object().pk
-
 
 class UserLoginView(SuccessMessageMixin, LoginView):
     """Вход в систему."""

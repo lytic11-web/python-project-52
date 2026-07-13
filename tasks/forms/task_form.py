@@ -1,17 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
 from tasks.models import Task
 
 
 class TaskForm(forms.ModelForm):
-    # Явно объявляем поле, чтобы гарантировать правильный рендеринг для тестов
-    executor = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        label='Исполнитель',
-        required=False,
-        empty_label='---------'
-    )
-
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -19,6 +10,7 @@ class TaskForm(forms.ModelForm):
             'name': 'Имя',
             'description': 'Описание',
             'status': 'Статус',
+            'executor': 'Исполнитель',  # ← Django сам создаст поле с этой меткой
             'labels': 'Метки',
         }
         widgets = {

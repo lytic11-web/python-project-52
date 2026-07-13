@@ -4,6 +4,14 @@ from tasks.models import Task
 
 
 class TaskForm(forms.ModelForm):
+    executor = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        label='Исполнитель',
+        required=False,
+        empty_label='---------',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -11,7 +19,6 @@ class TaskForm(forms.ModelForm):
             'name': 'Имя',
             'description': 'Описание',
             'status': 'Статус',
-            'executor': 'Исполнитель',
             'labels': 'Метки',
         }
         widgets = {

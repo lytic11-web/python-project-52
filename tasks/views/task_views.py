@@ -64,15 +64,18 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'tasks/task_delete.html'
     success_url = reverse_lazy('task_list')
 
-    def post(self, request, *args, **kwargs):
-        """Проверяем, что задачу удаляет только её автор."""
+    def dispatch(self, request, *args, **kwargs):
+        """Проверяем авторство при ЛЮБОМ запросе (GET или POST)."""
         task = self.get_object()
         if task.author != request.user:
             messages.error(request, 'Задачу может удалить только ее автор')
             return redirect('task_list')
-        
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        """Добавляем сообщение об успехе при реальном удалении."""
         messages.success(request, 'Задача успешно удалена')
-        return super().post(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):

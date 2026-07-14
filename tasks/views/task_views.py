@@ -67,7 +67,7 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 
     def test_func(self):
         """Только автор может удалить задачу."""
-        return self.request.user.pk == self.get_object().pk
+        return self.request.user.pk == self.get_object().author.pk
 
     def handle_no_permission(self):
         """Если не автор — редирект с сообщением."""

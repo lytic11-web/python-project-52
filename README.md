@@ -3,6 +3,11 @@
 [![GitHub Actions](https://github.com/lytic11-web/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lytic11-web/python-project-52/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lytic11-web_python-project-52&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lytic11-web_python-project-52)
 
+## Демо
+
+[https://task-manager-iplt.onrender.com/](https://task-manager-iplt.onrender.com/)
+
+
 Система управления задачами, подобная Redmine. Приложение для управления задачами, позволяющее создавать, редактировать и отслеживать статусы задач, а также назначать исполнителей и метки.
 
 ##  Технологический стек

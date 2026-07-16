@@ -1,37 +1,37 @@
+from .label_views import (
+    LabelCreateView,
+    LabelDeleteView,
+    LabelListView,
+    LabelUpdateView,
+)
 from .status_views import (
     IndexView,
-    StatusListView,
     StatusCreateView,
-    StatusUpdateView,
     StatusDeleteView,
-)
-from .label_views import (
-    LabelListView,
-    LabelCreateView,
-    LabelUpdateView,
-    LabelDeleteView,
+    StatusListView,
+    StatusUpdateView,
 )
 from .task_views import (
-    TaskListView,
     TaskCreateView,
-    TaskUpdateView,
     TaskDeleteView,
     TaskDetailView,
+    TaskListView,
+    TaskUpdateView,
 )
 
 __all__ = [
-    'IndexView',
-    'StatusListView',
-    'StatusCreateView',
-    'StatusUpdateView',
-    'StatusDeleteView',
-    'LabelListView',
-    'LabelCreateView',
-    'LabelUpdateView',
-    'LabelDeleteView',
-    'TaskListView',
-    'TaskCreateView',
-    'TaskUpdateView',
-    'TaskDeleteView',
-    'TaskDetailView',
+    "IndexView",
+    "StatusListView",
+    "StatusCreateView",
+    "StatusUpdateView",
+    "StatusDeleteView",
+    "LabelListView",
+    "LabelCreateView",
+    "LabelUpdateView",
+    "LabelDeleteView",
+    "TaskListView",
+    "TaskCreateView",
+    "TaskUpdateView",
+    "TaskDeleteView",
+    "TaskDetailView",
 ]

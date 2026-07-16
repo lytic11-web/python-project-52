@@ -26,7 +26,7 @@ test-pytest:
 	uv run pytest
 
 test-coverage:
-	uv run pytest --cov=task_manager --cov-report=xml:coverage.xml
+	uv run pytest --cov=. --cov-report=xml:coverage.xml
 
 build:
 	./build.sh

@@ -1,5 +1,5 @@
-from .status import Status
 from .label import Label
+from .status import Status
 from .task import Task
 
-__all__ = ['Status', 'Label', 'Task']
+__all__ = ["Status", "Label", "Task"]

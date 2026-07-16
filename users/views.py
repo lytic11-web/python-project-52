@@ -1,39 +1,45 @@
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
-from .forms import UserRegistrationForm, UserUpdateForm, UserLoginForm
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from .forms import UserLoginForm, UserRegistrationForm, UserUpdateForm
 
 
 class UserListView(ListView):
     """Список всех пользователей."""
+
     model = User
-    template_name = 'users/user_list.html'
-    context_object_name = 'users'
+    template_name = "users/user_list.html"
+    context_object_name = "users"
 
 
 class UserRegistrationView(SuccessMessageMixin, CreateView):
     """Регистрация нового пользователя."""
+
     model = User
     form_class = UserRegistrationForm
-    template_name = 'users/register.html'
-    success_url = reverse_lazy('login')
-    success_message = 'Пользователь успешно зарегистрирован'
+    template_name = "users/register.html"
+    success_url = reverse_lazy("login")
+    success_message = "Пользователь успешно зарегистрирован"
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class UserUpdateView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView
+):
     """Редактирование пользователя."""
+
     model = User
     form_class = UserUpdateForm
-    template_name = 'users/update.html'
-    success_url = reverse_lazy('users_list')
-    success_message = 'Пользователь успешно изменен'
+    template_name = "users/update.html"
+    success_url = reverse_lazy("users_list")
+    success_message = "Пользователь успешно изменен"
 
     def test_func(self):
         """Только сам пользователь может редактировать свой профиль."""
@@ -41,8 +47,8 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 
     def form_valid(self, form):
         # Если введены пароли и они совпадают, обновляем пароль пользователя
-        password1 = form.cleaned_data.get('password1')
-        password2 = form.cleaned_data.get('password2')
+        password1 = form.cleaned_data.get("password1")
+        password2 = form.cleaned_data.get("password2")
         if password1 and password2 and password1 == password2:
             self.object = form.save(commit=False)
             self.object.set_password(password1)
@@ -51,28 +57,34 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
         return super().form_valid(form)
 
 
-class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class UserDeleteView(
+    LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView
+):
     """Удаление пользователя."""
+
     model = User
-    template_name = 'users/delete.html'
-    success_url = reverse_lazy('index')
-    success_message = 'Пользователь успешно удален'
+    template_name = "users/delete.html"
+    success_url = reverse_lazy("index")
+    success_message = "Пользователь успешно удален"
 
     def test_func(self):
         return self.request.user.pk == self.get_object().pk
 
+
 class UserLoginView(SuccessMessageMixin, LoginView):
     """Вход в систему."""
+
     form_class = UserLoginForm
-    template_name = 'users/login.html'
-    success_message = 'Вы залогинены'
+    template_name = "users/login.html"
+    success_message = "Вы залогинены"
 
     def get_success_url(self):
-        return reverse_lazy('index')
+        return reverse_lazy("index")
+
 
 @require_POST
 def user_logout(request):
     """Выход из системы."""
     logout(request)
-    messages.success(request, 'Вы разлогинены')
-    return redirect('index')
+    messages.success(request, "Вы разлогинены")
+    return redirect("index")

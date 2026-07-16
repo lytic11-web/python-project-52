@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install uv
-          make install
+          uv sync --dev
       - name: Run linter and pytest
         run: |
           make check

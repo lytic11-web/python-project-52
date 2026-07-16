@@ -33,3 +33,7 @@ build:
 
 render-start:
 	uv run gunicorn task_manager.wsgi:application
+
+check: lint test
+
+.PHONY: install collectstatic migrate lint lint-fix run shell test test-pytest test-coverage build render-start check

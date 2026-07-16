@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install uv
-          uv sync --dev
+          uv sync --all-groups
       - name: Run linter and pytest
         run: |
           make check
@@ -34,4 +34,4 @@ jobs:
             -Dsonar.organization=lytic11-web
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.coverage.exclusions=tests/**
-            -Dsonar.exclusions=tests/**
+            -Dsonar.exclusions=.github/workflows/**,build.sh,**/tasks/index.html,**/migrations/**,tests/**

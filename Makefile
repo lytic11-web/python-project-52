@@ -1,5 +1,5 @@
 install:
-	uv sync
+	uv sync --dev
 
 collectstatic:
 	uv run python3 manage.py collectstatic --no-input

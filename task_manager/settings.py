@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     # Локальные приложения
     'users',
+    'statuses',
+    'labels',
     'tasks',
 ]
 

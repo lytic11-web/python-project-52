@@ -1,6 +1,6 @@
 [
 {
-  "model": "tasks.status",
+  "model": "statuses.status",
   "pk": 5,
   "fields": {
     "name": "Новый",
@@ -8,7 +8,7 @@
   }
 },
 {
-  "model": "tasks.status",
+  "model": "statuses.status",
   "pk": 6,
   "fields": {
     "name": "В работе",

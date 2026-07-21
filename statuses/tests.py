@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from tasks.models import Status
+from statuses.models import Status
 
 
 class StatusCRUDTest(TestCase):
@@ -12,7 +12,6 @@ class StatusCRUDTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        # Создаём пользователя для тестов
         self.user = User.objects.create_user(
             username="testuser", password="testpass123"
         )
@@ -22,7 +21,7 @@ class StatusCRUDTest(TestCase):
         """Список статусов требует авторизации."""
         self.client.logout()
         response = self.client.get(reverse("status_list"))
-        self.assertEqual(response.status_code, 302)  # редирект на login
+        self.assertEqual(response.status_code, 302)
 
     def test_status_list_accessible(self):
         """Список статусов доступен залогиненным."""
@@ -42,7 +41,8 @@ class StatusCRUDTest(TestCase):
         """Обновление статуса."""
         status = Status.objects.get(name="Новый")
         response = self.client.post(
-            reverse("status_update", args=[status.pk]), {"name": "Обновлённый"}
+            reverse("status_update", args=[status.pk]),
+            {"name": "Обновлённый"},
         )
         self.assertEqual(response.status_code, 302)
         status.refresh_from_db()
@@ -51,6 +51,8 @@ class StatusCRUDTest(TestCase):
     def test_status_delete(self):
         """Удаление статуса."""
         status = Status.objects.get(name="Новый")
-        response = self.client.post(reverse("status_delete", args=[status.pk]))
+        response = self.client.post(
+            reverse("status_delete", args=[status.pk])
+        )
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Status.objects.filter(name="Новый").exists())

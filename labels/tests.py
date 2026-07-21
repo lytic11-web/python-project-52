@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from tasks.models import Label, Status, Task
+from labels.models import Label
+from statuses.models import Status
+from tasks.models import Task
 
 
 class LabelCRUDTest(TestCase):
@@ -20,7 +22,6 @@ class LabelCRUDTest(TestCase):
         self.client.login(username="testuser", password="testpass123")
 
         self.status = Status.objects.get(name="Новый")
-
         self.label = Label.objects.create(name="Тестовая метка")
 
     def test_label_list_requires_login(self):
@@ -59,21 +60,21 @@ class LabelCRUDTest(TestCase):
             reverse("label_delete", args=[self.label.pk])
         )
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(Label.objects.filter(name="Тестовая метка").exists())
+        self.assertFalse(
+            Label.objects.filter(name="Тестовая метка").exists()
+        )
 
     def test_label_delete_with_task(self):
         """Нельзя удалить метку, связанную с задачей."""
-        # Создаём задачу с меткой
         task = Task.objects.create(
             name="Тестовая задача", status=self.status, author=self.user
         )
         task.labels.add(self.label)
 
-        # Пытаемся удалить метку
         response = self.client.post(
             reverse("label_delete", args=[self.label.pk])
         )
-        self.assertEqual(response.status_code, 302)  # редирект
+        self.assertEqual(response.status_code, 302)
         self.assertTrue(
             Label.objects.filter(name="Тестовая метка").exists()
-        )  # метка не удалена
+        )
